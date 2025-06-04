@@ -2,6 +2,27 @@
 
 Un sistema web moderno para la gestión de roles y usuarios, desarrollado con Vue.js 3 y TypeScript.
 
+## 🎯 Descripción del Problema
+
+En muchas organizaciones existe la necesidad de gestionar usuarios y sus respectivos roles de manera eficiente. Los problemas comunes incluyen:
+
+- **Gestión manual dispersa**: Información de usuarios y roles almacenada en diferentes lugares (Excel, documentos, etc.)
+- **Falta de centralización**: No existe un sistema único para consultar quién tiene qué rol
+- **Asignación inconsistente**: Dificultad para mantener coherencia en la asignación de roles
+- **Escalabilidad limitada**: Procesos manuales que no escalan con el crecimiento organizacional
+- **Falta de trazabilidad**: No hay registro claro de cambios y asignaciones
+
+## 💡 Solución
+
+Este sistema proporciona una **plataforma web centralizada** que permite:
+
+- ✅ **Crear y gestionar roles** con nombres descriptivos y detalles específicos
+- ✅ **Registrar usuarios completos** con toda su información personal y profesional
+- ✅ **Asignar roles de forma estructurada** garantizando consistencia
+- ✅ **Visualizar toda la información** en un dashboard centralizado
+- ✅ **Mantener integridad de datos** mediante validaciones automáticas
+- ✅ **Escalabilidad** para organizaciones de cualquier tamaño
+
 ## 🚀 Características
 
 - **Gestión de Roles**: Crear y visualizar roles con nombre y descripción
@@ -36,43 +57,119 @@ src/
 └── styles.css            # Estilos globales
 ```
 
-## 🚀 Instalación y Configuración
+## 🚀 Instalación y Ejecución
 
 ### Prerrequisitos
 
-- Node.js (versión 16 o superior)
-- npm o yarn
+Antes de ejecutar el proyecto, asegúrate de tener instalado:
+
+- **Node.js** (versión 16 o superior) - [Descargar aquí](https://nodejs.org/)
+- **npm** (incluido con Node.js) o **yarn**
+- **Backend API** corriendo en puerto 5000 (ver sección Backend)
 
 ### Pasos de instalación
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone <url-del-repositorio>
-   cd sistema-roles
-   ```
+#### 1. Clonar el repositorio
+```bash
+git clone <url-del-repositorio>
+cd sistema-roles
+```
 
-2. **Instalar dependencias**
-   ```bash
-   npm install
-   ```
+#### 2. Instalar dependencias
+```bash
+# Con npm
+npm install
 
-3. **Configurar el backend**
-   - Asegúrate de que tu API backend esté corriendo en `http://localhost:5000`
-   - El backend debe tener los siguientes endpoints:
-     - `GET /api/roles` - Obtener todos los roles
-     - `POST /api/roles` - Crear un nuevo rol
-     - `GET /api/users` - Obtener todos los usuarios
-     - `POST /api/users` - Crear un nuevo usuario
+# O con yarn
+yarn install
+```
 
-4. **Ejecutar en desarrollo**
-   ```bash
-   npm run dev
-   ```
+#### 3. Configurar el Backend (IMPORTANTE)
 
-5. **Compilar para producción**
-   ```bash
-   npm run build
-   ```
+**⚠️ NOTA CRÍTICA**: Este frontend requiere un backend API funcionando.
+
+El sistema espera que tengas un servidor API corriendo en `http://localhost:5000` con los siguientes endpoints:
+
+```
+GET  /api/roles     # Obtener todos los roles
+POST /api/roles     # Crear un nuevo rol
+GET  /api/users     # Obtener todos los usuarios  
+POST /api/users     # Crear un nuevo usuario
+```
+
+**Estructura esperada de datos:**
+
+```javascript
+// Rol
+{
+  "id": "string",
+  "nombre": "string", 
+  "descripcion": "string" // opcional
+}
+
+// Usuario
+{
+  "id": "string",
+  "nombres": "string",
+  "apellidos": "string", 
+  "identificacion": "string",
+  "email": "string",
+  "rolId": "string"
+}
+```
+
+#### 4. Ejecutar el proyecto
+
+```bash
+# Servidor de desarrollo (puerto 5173 por defecto)
+npm run dev
+
+# O con yarn
+yarn dev
+```
+
+#### 5. Abrir en el navegador
+
+El sistema estará disponible en: **http://localhost:5173**
+
+### Comandos disponibles
+
+```bash
+npm run dev         # Servidor de desarrollo con hot-reload
+npm run build       # Compilar para producción
+npm run preview     # Vista previa de la build de producción
+```
+
+### ⚠️ Solución de Problemas Comunes
+
+#### Error de conexión a la API
+```
+Network Error / CORS Error
+```
+**Solución**: Verifica que el backend esté corriendo en `http://localhost:5000`
+
+#### Puerto 5173 ocupado
+```
+Port 5173 is already in use
+```
+**Solución**: El sistema automáticamente usará el siguiente puerto disponible (5174, 5175, etc.)
+
+#### Dependencias faltantes
+```
+Module not found
+```
+**Solución**: Ejecuta `npm install` nuevamente
+
+### 🔧 Configuración Personalizada
+
+Si tu backend está en una URL diferente, modifica `src/services/api.ts`:
+
+```typescript
+const api = axios.create({
+  baseURL: 'http://tu-servidor:puerto/api', // Cambia esta URL
+  timeout: 5000,
+});
+```
 
 ## 🎯 Uso
 
