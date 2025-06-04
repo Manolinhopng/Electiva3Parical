@@ -71,7 +71,7 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
 
 #### 1. Clonar el repositorio
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/Manolinhopng/Electiva3Parical.git
 cd sistema-roles
 ```
 
