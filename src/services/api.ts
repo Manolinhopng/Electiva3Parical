@@ -1,30 +1,45 @@
-import axios from "axios";
-const api = axios.create({ baseURL: "/api" });
-export interface Writer {
-  id: number;
+// Tipos
+export interface Role {
+  id: string;
   nombre: string;
-  apellido: string;
-  nacionalidad: string;
-  edad: number;
-  books: any[];
+  descripcion?: string;
 }
-export interface Book {
-  id: number;
-  nombre: string;
-  genero: string;
-  añoPublicacion: number;
-  author: Writer;
+
+export interface User {
+  id: string;
+  nombres: string;
+  apellidos: string;
+  identificacion: string;
+  email: string;
+  rolId: string;
 }
-export const getWriters = () =>
-  api.get<Writer[]>("/writers").then((r) => r.data);
-export const createWriter = (w: Omit<Writer, "id" | "books">) =>
-  api.post<Writer>("/writers", w).then((r) => r.data);
-export const getBooks = () => api.get<Book[]>("/books").then((r) => r.data);
-export const createBook = (b: {
-  nombre: string;
-  genero: string;
-  añoPublicacion: number;
-  author: { id: number };
-}) => api.post<Book>("/books", b).then((r) => r.data);
-export const updateBookAuthor = (bookId: number, writerId: number) =>
-  api.put<Book>(`/books/${bookId}/author`, { writerId }).then((r) => r.data);
+
+// Simulación de bases de datos en memoria
+const rolesDB: Role[] = [];
+const usersDB: User[] = [];
+
+// ======================= ROL =======================
+export const getRoles = async (): Promise<Role[]> => {
+  return rolesDB;
+};
+
+export const createRole = async (role: Omit<Role, 'id'>): Promise<void> => {
+  const newRole: Role = {
+    id: crypto.randomUUID(),
+    ...role,
+  };
+  rolesDB.push(newRole);
+};
+
+// ======================= USUARIO =======================
+export const getUsers = async (): Promise<User[]> => {
+  return usersDB;
+};
+
+export const createUser = async (user: Omit<User, 'id'>): Promise<void> => {
+  const newUser: User = {
+    id: crypto.randomUUID(),
+    ...user,
+  };
+  usersDB.push(newUser);
+};
