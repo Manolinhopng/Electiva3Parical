@@ -28,7 +28,7 @@ const fetchData = async () => {
 };
 
 const getRolNombre = (rolId: string) => {
-  const rol = roles.value.find(r => r.id === rolId);
+  const rol = roles.value.find(r => r._id === rolId);
   return rol ? rol.nombre : "Rol desconocido";
 };
 

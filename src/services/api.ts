@@ -1,4 +1,5 @@
-// Tipos
+import axios from 'axios';
+
 export interface Role {
   id: string;
   nombre: string;
@@ -14,32 +15,27 @@ export interface User {
   rolId: string;
 }
 
-// Simulación de bases de datos en memoria
-const rolesDB: Role[] = [];
-const usersDB: User[] = [];
+const api = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  timeout: 5000,
+});
 
-// ======================= ROL =======================
+// Roles
 export const getRoles = async (): Promise<Role[]> => {
-  return rolesDB;
+  const response = await api.get('/roles');
+  return response.data;
 };
 
 export const createRole = async (role: Omit<Role, 'id'>): Promise<void> => {
-  const newRole: Role = {
-    id: crypto.randomUUID(),
-    ...role,
-  };
-  rolesDB.push(newRole);
+  await api.post('/roles', role);
 };
 
-// ======================= USUARIO =======================
+// Usuarios
 export const getUsers = async (): Promise<User[]> => {
-  return usersDB;
+  const response = await api.get('/users');
+  return response.data;
 };
 
 export const createUser = async (user: Omit<User, 'id'>): Promise<void> => {
-  const newUser: User = {
-    id: crypto.randomUUID(),
-    ...user,
-  };
-  usersDB.push(newUser);
+  await api.post('/users', user);
 };
